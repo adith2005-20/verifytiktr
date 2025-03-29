@@ -77,3 +77,22 @@ export const posts = createTable(
   }),
   (t) => [index("name_idx").on(t.name)],
 );
+
+export const host = createTable(
+  "host",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    name: d.varchar({ length: 256}).notNull(),
+    createdAt: d.timestamp({ withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+    uniqueCode: d.varchar({length:6}).notNull().unique(),
+  })
+)
+
+export const verifiedMembers = createTable(
+  "verified_members",
+  (d)=>({
+  id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+  userId: d.text().notNull().references(()=> user.id, {onDelete: 'cascade'}).unique(),
+  hostId: d.integer().notNull().references(()=> host.id, {onDelete: "cascade"}),
+  createdAt: d.timestamp({ withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+}))
