@@ -6,11 +6,12 @@ import { Loader2 } from "lucide-react";
 
 import Topbar from "@/components/Topbar";
 import { Suspense } from "react";
+import SendToAuthPage from "@/components/SendToAuthPage";
 
 export default async function Home() {
   const session = await getSession();
 
-  console.log(session);
+  
 
   const userId = session?.user?.id ?? "";
   const isVerified = session?.user?.isVerified ?? false;
@@ -19,12 +20,11 @@ export default async function Home() {
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
-        <Topbar />
         <Suspense fallback={<div><Loader2 className="animate-spin" /></div>}>
           {userId ? (
-            <VerificationCheck userId={userId} isVerified={isVerified} />
+            <><VerificationCheck userId={userId} isVerified={isVerified} /><Topbar /></>
           ) : (
-            <div>Loading...</div>
+            <div><SendToAuthPage/></div>
           )}
         </Suspense>
       </main>
