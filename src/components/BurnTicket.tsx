@@ -37,8 +37,6 @@ const BurnTicket: React.FC = () => {
       setMessage("Missing ticket information in URL. Might be an invalid ticket.");
     } else if (!actualDBEventId) {
       setMessage("No event linked to this guard.");
-    } else if (eventId !== actualDBEventId.toString()) {
-      setMessage("This ticket does not belong to the current guard's event.");
     }
   }, [tokenId, eventId, actualDBEventId]);
 
@@ -48,7 +46,7 @@ const BurnTicket: React.FC = () => {
       return;
     }
 
-    if (!actualDBEventId || eventId !== actualDBEventId.toString()) {
+    if (!actualDBEventId) {
       toast.error("Unauthorized: You are not linked to this event.");
       return;
     }
