@@ -25,7 +25,7 @@ const VerificationCheck = ({ userId, isVerified }: { userId: string; isVerified:
     router.push("/dashboard");
   }
 
-  const verify = api.host.verifyUserWithHost.useMutation({
+  const verify = api.event.verifyUserWithEvent.useMutation({
     onSuccess: () => {
         toast.success("yay you are verified")
       router.push("/dashboard");

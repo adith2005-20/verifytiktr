@@ -19,7 +19,7 @@ export function AuthView({
     return (
         <main className="flex flex-col grow p-4 items-center">
             <div/>
-            <AuthCard pathname={pathname} className="mt-[10%]" />
+            <AuthCard pathname={pathname} className="mt-[10%]"/>
         </main>
     )
 }

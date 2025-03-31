@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@daveyplate/better-auth-ui": "^1.2.42",
+    "@metamask/sdk-react": "^0.32.1",
+    "@radix-ui/react-popover": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "^5.69.0",
@@ -31,6 +33,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.41.0",
+    "ethers": "^6.13.5",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.484.0",
     "next": "^15.2.3",

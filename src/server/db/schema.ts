@@ -64,35 +64,49 @@ updatedAt: timestamp('updated_at')
 
 // core logic tables
 
-export const posts = createTable(
-  "post",
+
+
+// export const host = createTable(
+//   "host",
+//   (d) => ({
+//     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+//     name: d.varchar({ length: 256}).notNull(),
+//     createdAt: d.timestamp({ withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+//     uniqueCode: d.varchar({length:6}).notNull().unique(),
+//   })
+// )
+
+export const event = createTable(
+  "event",
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-    name: d.varchar({ length: 256 }),
+    name: d.varchar({ length: 256 }).notNull(),
     createdAt: d
       .timestamp({ withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+    uniqueCode: d.varchar({length:6}).notNull().unique(),
+    ownerId: d.text().notNull().references(()=> user.id, {onDelete: 'cascade'})
   }),
   (t) => [index("name_idx").on(t.name)],
 );
 
-export const host = createTable(
-  "host",
-  (d) => ({
-    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-    name: d.varchar({ length: 256}).notNull(),
-    createdAt: d.timestamp({ withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
-    uniqueCode: d.varchar({length:6}).notNull().unique(),
-  })
-)
-
-export const verifiedMembers = createTable(
-  "verified_members",
+export const verifiedGuards = createTable(
+  "verified_guards",
   (d)=>({
   id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
   userId: d.text().notNull().references(()=> user.id, {onDelete: 'cascade'}).unique(),
-  hostId: d.integer().notNull().references(()=> host.id, {onDelete: "cascade"}),
+  eventId: d.integer().notNull().references(()=> event.id, {onDelete: "cascade"}),
   createdAt: d.timestamp({ withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }))
+
+export const eventGoer = createTable(
+  "event_goer",
+  (d)=>({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+    guardId: d.text().notNull().references(() => user.id, { onDelete: 'cascade' }),
+    eventId: d.integer().notNull().references(() => event.id, { onDelete: "cascade" }), 
+    enteredAt: d.timestamp({ withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull()
+  })
+)

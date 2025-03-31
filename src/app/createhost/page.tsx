@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import { useSDK } from "@metamask/sdk-react";
 
 const Page = () => {
   const [hostName, setHostName] = useState("");
-  const code = api.host.create.useMutation({
+  const code = api.event.create.useMutation({
     onSuccess: (data) => {
       toast("Host org created your code is: " + data);
       setHostName("");
@@ -20,6 +21,8 @@ const Page = () => {
   const handleClick = () => {
     code.mutate({ name: hostName });
   };
+
+  console.log(useSDK())
   return (
     <div className="flex h-screen flex-col flex-wrap items-center justify-center">
       <span className="mb-4 text-2xl font-bold">
