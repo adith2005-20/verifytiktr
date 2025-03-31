@@ -5,7 +5,7 @@ interface MetaMaskEthereum extends Window {
   ethereum?: ethers.Eip1193Provider;
 }
 
-const CONTRACT_ADDRESS = "0x1c6a877f253b9a8562aec27855b93ed91fdb17db";
+const CONTRACT_ADDRESS = "0xcabe839e007da417acb15d7736a2c5b5ad257091";
 const CONTRACT_ABI = [
   "function burnTicketByGuard(uint256 tokenId)",
   "function useTicket(uint256 tokenId)",
