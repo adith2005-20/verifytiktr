@@ -15,6 +15,9 @@ const formatAddress = (address: string | undefined) => {
   return `${address.slice(0, 4)}...${address.slice(-4)}`;
 };
 
+import Tiktrlogo from "@/assets/tiktrlogo.png"
+import Image from "next/image";
+
 export const ConnectWalletButton = () => {
   const { sdk, connected, connecting, account } = useSDK();
 
@@ -67,7 +70,7 @@ const Topbar = () => {
 
   return (
     <nav className="fixed top-0 right-0 left-0 m-4 flex justify-between">
-      <span className="text-4xl font-bold">Tiktr</span>
+      <span className="text-4xl font-bold"><Image src={Tiktrlogo} width={80} height={100} alt="Tiktr Logo"/></span>
       <div className="flex gap-4">
         <Button
           className="top-4 right-4"
