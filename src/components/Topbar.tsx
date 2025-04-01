@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Wallet } from "lucide-react";
-import { useSDK, MetaMaskProvider } from "@metamask/sdk-react";
+import { useSDK } from "@metamask/sdk-react";
 import {
   Popover,
   PopoverTrigger,
@@ -17,6 +17,7 @@ const formatAddress = (address: string | undefined) => {
 
 import Tiktrlogo from "@/assets/tiktrlogo.png"
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 export const ConnectWalletButton = () => {
   const { sdk, connected, connecting, account } = useSDK();
@@ -38,11 +39,18 @@ export const ConnectWalletButton = () => {
     <div className="relative">
       {connected ? (
         <Popover>
-          <PopoverTrigger>
+          <PopoverTrigger asChild>
             <Button>{formatAddress(account)}</Button>
           </PopoverTrigger>
           <PopoverContent className="top-10 right-0 z-10 mt-2 w-44 rounded-md border bg-gray-100 shadow-lg">
-            <Button onClick={disconnect}>Disconnect</Button>
+            <Button
+              variant={"outline"}
+              className="text-background hover:text-muted-foreground"
+              size={"sm"}
+              onClick={disconnect}
+            >
+              Disconnect
+            </Button>
           </PopoverContent>
         </Popover>
       ) : (
@@ -55,18 +63,7 @@ export const ConnectWalletButton = () => {
 };
 
 const Topbar = () => {
-  const host =
-    typeof window !== "undefined" ? window.location.host : "defaultHost";
   const router = useRouter();
-
-  const sdkOptions = {
-    logging: { developerMode: false },
-    checkInstallationImmediately: false,
-    dappMetadata: {
-      name: "Next-Metamask-Boilerplate",
-      url: host, // using the host constant defined above
-    },
-  };
 
   return (
     <nav className="fixed top-0 right-0 left-0 m-4 flex justify-between">
@@ -76,7 +73,8 @@ const Topbar = () => {
           className="top-4 right-4"
           variant="outline"
           onClick={() => {
-            router.push("/auth/sign-out");
+            authClient.signOut();
+            router.push("/auth/sign-in");
           }}
         >
           Sign out
