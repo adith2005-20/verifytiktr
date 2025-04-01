@@ -72,8 +72,8 @@ const Topbar = () => {
         <Button
           className="top-4 right-4"
           variant="outline"
-          onClick={() => {
-            authClient.signOut();
+          onClick={async () => {
+            await authClient.signOut();
             router.push("/auth/sign-in");
           }}
         >
